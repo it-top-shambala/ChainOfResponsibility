@@ -1,0 +1,11 @@
+word
+bad
+word
+second
+bad
+second
+second
+second
+second
+word
+bad

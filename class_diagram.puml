@@ -1,0 +1,59 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface ISource{
++ {abstract} GetWords() : string[]
+}
+
+ISource <|.. FileSource
+class FileSource {
+- path : string
+
++ FileSource(path : string)
+
++ GetWords() : string[]
+}
+
+interface IReport {
++ {abstract} Report(message : string) : void
+}
+
+IReport <|.. FileReport
+class FileReport {
+- path : string
+
++ FileReport(path : string)
+
++ Report(message : string) : void
+}
+
+IReport <|.. ConsoleReport
+class ConsoleReport {
++ Report(message : string) : void
+}
+
+IHandler <-- IHandler
+interface IHandler {
++ {abstract} SetNext(handler : IHandler) : IHandler
++ {abstract} FindWords(str : string) : void
+}
+
+IHandler <--* HandlerLayer
+ISource <--* HandlerLayer
+IReport <--* HandlerLayer
+IHandler <|.. HandlerLayer
+class HandlerLayer {
+- handler : Handler
+- source : ISource
+- reports : IReport[]
+
++ HandlerLayer(source : ISource)
+
++ AddReport(report : IReport) : void
+
++ SetNext(handler : IHandler) : IHandler
++ FindWords(str : string) : void
+}
+
+
+@enduml
